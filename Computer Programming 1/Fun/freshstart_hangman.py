@@ -77,16 +77,15 @@ def start():
     chosen_word=str(words[chosen_word])
     chosen_word_length=len(chosen_word)
 
-    current_stage=[]
-    current_stage.append(stages[0]) #setting the first stage so I don't have to later
+    current_stage=0 #this number will change from 0-6 as the player guesses the wrong letter
 
     while True:
-        for item in current_stage:
+        for item in stages[current_stage]: #printing the current stage of the hangman
             print(item)
+        
         break
         
 
         
-
 start()
 
