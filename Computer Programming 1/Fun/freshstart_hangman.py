@@ -81,12 +81,13 @@ def start():
     loop_helper=chosen_word_length
     while loop_helper!=0:
         chosen_word_underscore.append("_")
+        loop_helper-=1
     current_stage=0 #this number will change from 0-6 as the player guesses the wrong letter
 
     while True:
         for item in stages[current_stage]: #printing the current stage of the hangman
             print(item)
-        print(chosen_word_underscore)
+        print(chosen_word_underscore[0:chosen_word_length])
         break
         
 
