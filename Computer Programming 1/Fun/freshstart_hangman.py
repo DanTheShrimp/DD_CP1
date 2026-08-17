@@ -69,20 +69,24 @@ def tester_function(): #this function exists so I can test if the stages print p
         loop_helper+=1
 
 # \/ list of words, if I change the number of words I have to update the random number generator \/
-words=["Food","Computer","Somewhere","Attacked","Disoriented","Alright","Chili","Bridge","Programmer","Number"]
+words=["Food","Computer","Somewhere","Attacked","Disoriented","Alright","Chili","Bridge","Programmer","Number","Student","Lunch","Pasta","Ocean","Hangman"]
 
 def start():
     #choosing the word, assigning it to a variable, and getting its length
-    chosen_word=random.randint(0,9) #update this if the number of words change
+    chosen_word=random.randint(0,14) #update this if the number of words change
     chosen_word=str(words[chosen_word])
     chosen_word_length=len(chosen_word)
-
+    chosen_word_underscore=[]
+    
+    loop_helper=chosen_word_length
+    while loop_helper!=0:
+        chosen_word_underscore.append("_")
     current_stage=0 #this number will change from 0-6 as the player guesses the wrong letter
 
     while True:
         for item in stages[current_stage]: #printing the current stage of the hangman
             print(item)
-        
+        print(chosen_word_underscore)
         break
         
 
