@@ -1,8 +1,24 @@
 #Daniel DeLong, Hangman for Fun
 import sys,time,random
 
-stages=[ #There are seven stages, number 0 is the first one, 6 is the last
-    [" ___    ",
+stages=[ #There are nine stages, number 0 is the first one, 8 is the last
+    [" ___    ", #stage 0
+    " |  |    ",
+    "\\o/ |    ",
+    " |  |    ",
+    "/ \\ |    ",
+    "^ ^ |    ",
+    "____|____"],
+
+    [" ___     ", #stage 1
+    " |  |    ",
+    "\\o/ |    ",
+    " |  |    ",
+    "/ \\ |    ",
+    "^   |    ",
+    "____|____"],
+
+    [" ___    ", #stage 2
     " |  |    ",
     "\\o/ |    ",
     " |  |    ",
@@ -10,7 +26,7 @@ stages=[ #There are seven stages, number 0 is the first one, 6 is the last
     "    |    ",
     "____|____"],
 
-    [" ___     ",
+    [" ___     ", #stage 3
     " |  |    ",
     "\\o/ |    ",
     " |  |    ",
@@ -18,7 +34,7 @@ stages=[ #There are seven stages, number 0 is the first one, 6 is the last
     "    |    ",
     "____|____"],
 
-    [" ___     ",
+    [" ___     ", #stage 4
     " |  |    ",
     "\\o/ |    ",
     " |  |    ",
@@ -26,7 +42,7 @@ stages=[ #There are seven stages, number 0 is the first one, 6 is the last
     "    |    ",
     "____|____"],
 
-    [" ___     ",
+    [" ___     ", #stage 5
     " |  |    ",
     "\\o  |    ",
     " |  |    ",
@@ -34,7 +50,7 @@ stages=[ #There are seven stages, number 0 is the first one, 6 is the last
     "    |    ",
     "____|____"],
 
-    [" ___     ",
+    [" ___     ", #stage 6
     " |  |    ",
     " o  |    ",
     " |  |    ",
@@ -42,7 +58,7 @@ stages=[ #There are seven stages, number 0 is the first one, 6 is the last
     "    |    ",
     "____|____"],
 
-    [" ___     ",
+    [" ___     ", #stage 7
     " |  |    ",
     " o  |    ",
     "    |    ",
@@ -50,7 +66,7 @@ stages=[ #There are seven stages, number 0 is the first one, 6 is the last
     "    |    ",
     "____|____"],
 
-    [" ___     ",
+    [" ___     ", #stage 8
     " |  |    ",
     "    |    ",
     "    |    ",
@@ -88,7 +104,7 @@ def start():
 
     while True:
         #this chunk is checking if we lost or won
-        if current_stage==6: #checking if we are on the last stage
+        if current_stage==8: #checking if we are on the last stage
             print("You ran out of guesses!")
             time.sleep(1)
             print(f"The word was: {chosen_word}")
@@ -128,6 +144,22 @@ def start():
             except IndexError: #this triggers if an Index Error occurs, when an item in a list doesn't exist
 
                 if loop_helper==0: #checking if this is the first time the while loop has run, if this passes it means that the letter we inputted isn't in the chosen word
+                    #these if statements help the player know if they guessed wrongly
+                    if current_stage==0 or current_stage==1:
+                        print("He lost a foot!")
+                        time.sleep(1)
+                    elif current_stage==2 or current_stage==3:
+                        print("He lost a leg!")
+                        time.sleep(1)
+                    elif current_stage==4 or current_stage==5:
+                        print("He lost an arm!")
+                        time.sleep(1)
+                    elif current_stage==6:
+                        print("He lost his torso!")
+                        time.sleep(1)
+                    elif current_stage==7:
+                        print("He lost his head!")
+                        time.sleep(1)
                     current_stage+=1 #changing the stage
                     break
 
