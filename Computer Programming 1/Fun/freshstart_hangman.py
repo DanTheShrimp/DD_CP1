@@ -1,3 +1,4 @@
+#Daniel DeLong, Hangman for Fun
 import sys,time,random
 
 stages=[ #There are seven stages, number 0 is the first one, 6 is the last
@@ -78,6 +79,7 @@ def start():
     chosen_word_length=len(chosen_word)
     chosen_word_underscore=[]
     
+    #creating the underscore word that will be changed and displayed to players at will
     loop_helper=chosen_word_length
     while loop_helper!=0:
         chosen_word_underscore.append("_")
@@ -85,34 +87,39 @@ def start():
     current_stage=0 #this number will change from 0-6 as the player guesses the wrong letter
 
     while True:
-
+        #this chunk is checking if we lost or won
         if current_stage==6: #checking if we are on the last stage
             print("You ran out of guesses!")
+            time.sleep(1)
             print(f"The word was: {chosen_word}")
             sys.exit() #if we are then we end the program
         try:
             chosen_word_underscore.index("_")
-
         except ValueError:
             print("Congratulations, you win!")
+            time.sleep(1)
             print(f"The word was: {chosen_word}")
             sys.exit()
 
+        #printing the stage and hidden word
         for item in stages[current_stage]: #printing the current stage of the hangman
             print(item)
         print("") #printing a space so the underscores aren't directly underneath the hangman stage
+        time.sleep(1)
         for item in chosen_word_underscore: #printing the underscores
             print(item, end="")
         print("")
         
+        #asking the player for a letter
         while True:
             print("Please input one letter.")
             input_letter=str(input()) #getting the user's input
             input_letter.lower() #making all of it lowercase
-            if len(input_letter)==1: # checking if the input is one character long
+            if len(input_letter)==1: # checking if the input is one character long, if it isn't we re-ask them
                 break
         input_letter_position=[index for index, char in enumerate(chosen_word) if char==input_letter] #finding all positions where the inputted letter is
 
+        #changing all positions where the inputted letter is, if any
         loop_helper=0
         while True:
             try:
@@ -126,10 +133,5 @@ def start():
 
                 else:
                     break
-            loop_helper+=1
-
-        
-
-        
+            loop_helper+=1     
 start()
-
