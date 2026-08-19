@@ -26,8 +26,18 @@ def tic_tac_toe():
     current_player = "X"
     while True:
         print_board(board)
-        row = int(input(f"Player {current_player}, enter your move row (0-2): "))
-        col = int(input(f"Player {current_player}, enter your move column (0-2): "))
+        try:
+            row = int(input(f"Player {current_player}, enter your move row (0-2): "))
+            if row!=0 and row!=1 and row!=2:
+                print("Please enter a valid number (0-2): ")
+                continue
+            col = int(input(f"Player {current_player}, enter your move column (0-2): "))
+            if col!=0 and col!=1 and col!=2:
+                print("Please enter a valid number (0-2): ")
+                continue
+        except ValueError:
+            print("Please enter a valid number (0-2).")
+            continue
         if board[row][col] != " ":
             print("Invalid move. Try again.")
             continue
