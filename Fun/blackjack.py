@@ -458,9 +458,10 @@ current_house_value=0
 
 def typer(text):
     for char in text:
+        speed=random.uniform(0.025,0.0125)
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(0.025) 
+        time.sleep(speed) 
     print()
 
 def house_valuefinder(card):
