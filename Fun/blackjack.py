@@ -725,10 +725,14 @@ house_value_calculator(hcard_1,hcard_2)
 if win_checker_forstart(pcard_1, pcard_2)==1:
     typer("You got Blackjack!")
     time.sleep(0.5)
+    custom_printer("no")
+    time.sleep(2)
     win("p")
 elif win_checker_forstart(hcard_1, hcard_2)==1:
     typer("The house got Blackjack.")
     time.sleep(0.5)
+    custom_printer("no")
+    time.sleep(2)
     win("h")
 
 typer("Your current total card value is: ")
@@ -762,8 +766,8 @@ def player_turn(player_value_helper):
     if answer=="hit":
         next_pcard=player_valuefinder(player_value_helper)
         custom_printer("yes")
-        player_value_calculator(player_value_history[len(house_value_history)-1],next_pcard)
-        current_player_value=player_value_history[len(house_value_history)-1]
+        player_value_calculator(player_value_history[len(player_value_history)-1],next_pcard)
+        current_player_value=player_value_history[len(player_value_history)-1]
         typer("Your current total card value is: ")
         time.sleep(0.25)
         typer(str(current_player_value))
@@ -833,8 +837,6 @@ latest_house_value=len(house_value_history)-1
 if latest_player_value==latest_house_value:
     typer("You got the same score as the house.")
     win("t")
-    typer("You got closer to 21 than the house.")
-    win("p")
 elif latest_house_value>latest_player_value:
     typer("The house got closer to 21 than you.")
     win("h")
