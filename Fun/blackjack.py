@@ -458,7 +458,7 @@ current_house_value=0
 
 def typer(text):
     for char in text:
-        speed=random.uniform(0.125,0.0125)
+        speed=random.uniform(0.0725,0.0125)
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(speed) 
@@ -744,7 +744,8 @@ time.sleep(0.25)
 typer(str(player_value_history[len(house_value_history)-1]))
 
 def player_turn(player_value_helper):
-    if player_value_history[len(house_value_history)-1]>21:
+    print(player_value_history[len(house_value_history)-1])
+    if current_player_value>=22:
         typer("You bust.")
         win("h")
     def hit_stand_sequence():
@@ -811,13 +812,13 @@ def house_turn(house_value_helper):
         custom_printer("no")
         house_value_calculator(house_value_history[len(house_value_history)-1], next_hcard)
         current_house_value=house_value_history[len(house_value_history)-1]
-        if current_house_value>21:
+        if current_house_value>=22:
             typer("The house busts.")
             win("p")
         elif current_house_value>=17:
             typer("The house stands.")
             return "Stand"
-        elif current_house_value<17:
+        elif current_house_value<=16:
             return "Hit"
         typer("The house's current total card value is: ")
         time.sleep(0.25)
