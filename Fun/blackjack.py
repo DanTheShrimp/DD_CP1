@@ -723,8 +723,8 @@ typer("Let's begin.")
 time.sleep(0.5)
 custom_printer("yes")
 
-current_player_value=player_value_calculator(pcard_1,pcard_2)
-current_house_value=house_value_calculator(hcard_1,hcard_2)
+player_value_calculator(pcard_1,pcard_2)
+house_value_calculator(hcard_1,hcard_2)
 
 if win_checker_forstart(pcard_1, pcard_2)==1:
     typer("You got Blackjack!")
@@ -741,12 +741,10 @@ elif win_checker_forstart(hcard_1, hcard_2)==1:
 
 typer("Your current total card value is: ")
 time.sleep(0.25)
-typer(str(player_value_history[len(house_value_history)-1]))
+typer(str(player_value_history[len(player_value_history)-1]))
 
 def player_turn(player_value_helper):
-    current_player_value=player_value_history[len(house_value_history)-1]
-    print(player_value_history[len(house_value_history)-1])
-    if current_player_value>=22:
+    if player_value_history[len(player_value_history)-1]>=22:
         typer("You bust.")
         win("h")
     def hit_stand_sequence():
