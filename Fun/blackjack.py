@@ -3,7 +3,6 @@ import sys, time, random
 import os
 
 def clear_terminal():
-    # 'nt' is for Windows, otherwise (macOS/Linux) use 'clear'
     os.system('cls' if os.name == 'nt' else 'clear')
 
 slug=[
