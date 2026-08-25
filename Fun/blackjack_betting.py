@@ -454,8 +454,17 @@ player_value_history=[]
 house_value_history=[]
 current_player_value=0
 current_house_value=0
-money=250
-bet_amount=0
+bet_amount_history=[]
+money_list=[250]
+
+def reset():
+    while len(player_hand)>=1:
+        deck.append(player_hand[len(player_hand)-1])
+        player_hand.remove(len(player_hand)-1)
+    while len(house_hand)>=0:
+        deck.append(house_hand[len(house_hand)-1])
+        house_hand.remove(len(house_hand)-1)
+    return "do it"
 
 def typer(text):
     for char in text:
@@ -627,26 +636,28 @@ def money_updater(winorlose,money,bet_amount):
     elif winorlose=="h":
         money=money-bet_amount
         if money<=0:
+            time.sleep(1)
             typer("You ran out of money.")
             time.sleep(0.75)
             sys.exit()
     elif winorlose=="t":
         money=money
     time.sleep(2.5)
+    money_list.clear()
+    money_list.append(money)
     actual_game()
-    return money
 
 def betting_time():
+    time.sleep(1)
+    typer("How much money do you want to bet? Yes, you can bet more than what you have.")
     while True:
-        time.sleep(1)
-        typer("How much money do you want to bet? Yes, you can bet more than what you have.")
         try:
             bet_amount=int(input(""))
         except:
             typer("Please input a number.")
         else:
             break
-    return betting_time
+    bet_amount_history.append(bet_amount)
 
 def win(who):
     won=[
@@ -703,7 +714,7 @@ def win(who):
     elif who=="t":
         for item in tie:
             print(item)
-    money=money_updater(who,money,bet_amount)
+    money_updater(who,money_list[len(money_list)-1],bet_amount_history[len(bet_amount_history)-1])
 
 def win_checker_forstart(first_num, second_num):
     win=0
@@ -727,28 +738,28 @@ for item in slug:
     print(item)
 time.sleep(3)
 clear_terminal()
+typer("Welcome to Doomslug Blackjack.")
+time.sleep(0.75)
+typer("Do you know the rules of Blackjack?")
+do_they_know=str(input(""))
+if "no" in do_they_know:
+    typer("Here are the rules of this game:")
+    time.sleep(0.5)
+    typer("1. The goal is to get as close to 21 without going over. If you start with an Ace and another card worth 10, you win instantly.")
+    time.sleep(0.75)
+    typer("2. Face cards are worth 10, and Aces are worth 1. Number cards are worth themselves.")
+    time.sleep(0.75)
+    typer("3. If you reach 7 cards without going over 21, you automatically win. This rule is called Seven Card Charlie, and it also affects the house.")
+    time.sleep(0.75)
+    typer("4. During your turn, you can hit or stand. Hitting means you want another card, and standing means you stop.")
+    time.sleep(0.75)
+    typer("5. The house will continuously hit until they reach 17 or any number higher than 17.")
 
 def actual_game():
-    typer("Welcome to Doomslug Blackjack.")
     time.sleep(1)
-    typer(f"You have ${money}.")
-    bet_amount=betting_time()
-    time.sleep(0.75)
-    typer("Do you know the rules of Blackjack?")
-    do_they_know=str(input(""))
-    if "no" in do_they_know:
-        typer("Here are the rules of this game:")
-        time.sleep(0.5)
-        typer("1. The goal is to get as close to 21 without going over. If you start with an Ace and another card worth 10, you win instantly.")
-        time.sleep(0.75)
-        typer("2. Face cards are worth 10, and Aces are worth 1. Number cards are worth themselves.")
-        time.sleep(0.75)
-        typer("3. If you reach 7 cards without going over 21, you automatically win. This rule is called Seven Card Charlie, and it also affects the house.")
-        time.sleep(0.75)
-        typer("4. During your turn, you can hit or stand. Hitting means you want another card, and standing means you stop.")
-        time.sleep(0.75)
-        typer("5. The house will continuously hit until they reach 17 or any number higher than 17.")
-        time.sleep(1.5)
+    typer(f"You have ${money_list[0]}.")
+    betting_time()
+    time.sleep(1.5)
     typer("Let's begin.")
     time.sleep(0.5)
     custom_printer("yes")
@@ -865,8 +876,8 @@ def actual_game():
             break
         loop_helper+=1
 
-    latest_player_value=len(player_value_history)-1
-    latest_house_value=len(house_value_history)-1
+    latest_player_value=player_value_history[len(player_value_history)-1]
+    latest_house_value=house_value_history[len(house_value_history)-1]
 
     if latest_player_value==latest_house_value:
         typer("You got the same score as the house.")
