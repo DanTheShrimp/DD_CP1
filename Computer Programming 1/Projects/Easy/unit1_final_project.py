@@ -26,16 +26,91 @@ def beginning():
     return player_chosen_game #returning the variable to 
 
 def coin_flip():
-    typer("Coin Flip")
+    typer("Flipping a coin.")
+    time.sleep(0.25)
+    typer("...")
+    time.sleep(0.25)
+    typer("...")
+    time.sleep(0.25)
+    typer("...")
+    time.sleep(1)
+    coinflip_answer=random.randint(1,2)
+
+    if coinflip_answer==1:
+        coinflip_answer="heads"
+    elif coinflip_answer:
+        coinflip_answer="tails"
+    
+    typer(f"It's {coinflip_answer}.")
 
 def dice_roll():
-    typer("Dice Roll")
+    typer("Which dice do you want to roll? Your options are D4, D6, D8, D10, D100, D12, and D20.")
+
+    time.sleep(0.75)
+    while True:
+        diceroll_answer=input("").lower()
+
+        if "4" in diceroll_answer:
+            diceroll_answer=4
+            break
+        elif "6" in diceroll_answer:
+            diceroll_answer=6
+            break
+        elif "8" in diceroll_answer:
+            diceroll_answer=8
+            break
+        elif "10" in diceroll_answer:
+            diceroll_answer=10
+            break
+        elif "100" in diceroll_answer or "%" in diceroll_answer:
+            diceroll_answer=100
+            break
+        elif "12" in diceroll_answer:
+            diceroll_answer=12
+            break
+        elif "20" in diceroll_answer:
+            diceroll_answer=20
+            break
+        else:
+            typer("Please choose one of the options.")
+            continue
+    if diceroll_answer != 100:
+        diceroll_answer=random.randint(1,diceroll_answer)
+        typer("Rolling the die.")
+        time.sleep(0.25)
+        typer("...")
+        time.sleep(0.25)
+        typer("...")
+        time.sleep(0.25)
+        typer("...")
+        time.sleep(1)
+    else:
+        diceroll_answer=random.randint(1,10)*10
+        typer("Rolling the die.")
+        time.sleep(0.25)
+        typer("...")
+        time.sleep(0.25)
+        typer("...")
+        time.sleep(0.25)
+        typer("...")
+        time.sleep(1)
+    typer(f"The rolled number is {diceroll_answer}")
 
 def card_pull():
-    typer("Card Pull")
+    deck=["Ace of Spades","Two of Spades","Three of Spades","Four of Spades","Five of Spades","Six of Spades","Seven of Spades","Eight of Spades","Nine of Spades","Ten of Spades","Jack of Spades","Queen of Spades","King of Spades","Ace of Clubs","Two of Clubs","Three of Clubs","Four of Clubs","Five of Clubs","Six of Clubs","Seven of Clubs","Eight of Clubs","Nine of Clubs","Ten of Clubs","Jack of Clubs","Queen of Clubs","King of Clubs","Ace of Diamonds","Two of Diamonds","Three of Diamonds","Four of Diamonds","Five of Diamonds","Six of Diamonds","Seven of Diamonds","Eight of Diamonds","Nine of Diamonds","Ten of Diamonds","Jack of Diamonds","Queen of Diamonds","King of Diamonds","Ace of Hearts","Two of Hearts","Three of Hearts","Four of Hearts","Five of Hearts","Six of Hearts","Seven of Hearts","Eight of Hearts","Nine of Hearts","Ten of Hearts","Jack of Hearts","Queen of Hearts","King of Hearts","Joker","Joker"]
+    cardpull_answer=random.randint(0,53)
+    typer("Pulling a card.")
+    time.sleep(0.25)
+    typer("...")
+    time.sleep(0.25)
+    typer("...")
+    time.sleep(0.25)
+    typer("...")
+    time.sleep(1)
+    typer(f"The card is {deck[cardpull_answer]}")
 
 def random_number():
-    typer("Random Number")
+    typer("What is the first number?")
 
 def russian_roulette():
     time.sleep(1)
