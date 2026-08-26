@@ -757,7 +757,7 @@ if "no" in do_they_know:
 
 def actual_game():
     time.sleep(1)
-    typer(f"You have ${money_list[0]}.")
+    typer(f"You have ${money_list[len(money_list)-1]}.")
     betting_time()
     time.sleep(1.5)
     typer("Let's begin.")
