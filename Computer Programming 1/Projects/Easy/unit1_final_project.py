@@ -260,21 +260,23 @@ def russian_roulette(): #this is russion roulette, but i changed one rule
                     does_it_fire="n"
                     print("*click*")
                     return does_it_fire
-        remaining_bullets=6
+        remaining_bullets=6 #this variable will change as the gun doesn't fire, so the chance of the gun shooting slowly goes up
         while True:
-            did_it_fire=player_turn(remaining_bullets)
+            did_it_fire=player_turn(remaining_bullets) #calling the player_turn function, and the argument is remaining bullets
+            if did_it_fire=="n": #if the function returns that the gun didn't fire, we do this
+                remaining_bullets-=1 #lower remaining bullets but one, so the first time this activates there would now be 5 bullets left
+            did_it_fire=computer_turn(remaining_bullets) #calling the computer_turn function, and using the same variable as the argument
             if did_it_fire=="n":
                 remaining_bullets-=1
-            did_it_fire=computer_turn(remaining_bullets)
-            if did_it_fire=="n":
-                remaining_bullets-=1
+
+
     time.sleep(1)
     typer("Are you sure you want to play Russian Roulette?")
-    are_you_sure=input("").lower()
-    if "yes" in are_you_sure:
+    are_you_sure=input("").lower() #asking if they want to play this game, and making the whole thing lowercase
+    if "yes" in are_you_sure: #if they want to we go ahead and call the game function, starting the game
         time.sleep(1)
         game()
-    else:
+    else: #if they don't want to we send them back to the choosing menu
         time.sleep(2)
         choosing()
         
