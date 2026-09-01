@@ -732,6 +732,8 @@ time.sleep(3)
 clear_terminal()
 typer("Welcome to Doomslug Blackjack.")
 while True:
+    time.sleep(0.75)
+    typer("Do you know the rules of Blackjack?")
     do_they_know=str(input(""))
     if "ye" in do_they_know:
         time.sleep(0)
@@ -749,9 +751,7 @@ while True:
         time.sleep(0.75)
         typer("5. The house will continuously hit until they reach 17 or any number higher than 17.")
         break
-    else:
-        time.sleep(0.75)
-        typer("Do you know the rules of Blackjack?")
+
 
 def actual_game():
     time.sleep(1)
@@ -787,7 +787,9 @@ def actual_game():
     def player_turn(player_value_helper):
         if player_value_history[len(player_value_history)-1]>=22:
             typer("You bust.")
+            time.sleep(0.75)
             win("h")
+            time.sleep(2)
             return "Bust"
         def hit_stand_sequence():
             while True:
