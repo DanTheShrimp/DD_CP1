@@ -468,7 +468,7 @@ def reset():
 
 def typer(text):
     for char in text:
-        speed=random.uniform(0.0725,0.0125)
+        speed=random.uniform(0.0125,0.0725)
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(speed) 
