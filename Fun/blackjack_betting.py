@@ -457,22 +457,12 @@ current_house_value=0
 bet_amount_history=[]
 money_list=[250]
 
-def reset():
-    while len(player_hand)>=1:
-        deck.append(player_hand[len(player_hand)-1])
-        player_hand.remove(len(player_hand)-1)
-    while len(house_hand)>=0:
-        deck.append(house_hand[len(house_hand)-1])
-        house_hand.remove(len(house_hand)-1)
-    return "do it"
-
 def typer(text):
     for char in text:
-        speed=random.uniform(0.0125,0.0725)
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(speed) 
-    print()
+        speed=random.randint(250,750)/random.randint(5000,15000)
+        print(char,end="")
+        time.sleep(speed)
+    print("")
 
 def house_valuefinder(card):
     decklen=len(deck)
@@ -645,18 +635,20 @@ def money_updater(winorlose,money,bet_amount):
     time.sleep(2.5)
     money_list.clear()
     money_list.append(money)
-    actual_game()
 
 def betting_time():
     time.sleep(1)
-    typer("How much money do you want to bet? Yes, you can bet more than what you have.")
+    typer("How much money do you want to bet?")
     while True:
         try:
             bet_amount=int(input(""))
         except:
             typer("Please input a number.")
         else:
-            break
+            if bet_amount>money_list[len(money_list)-1]:
+                typer("You cannot bet more than what you have.")
+            else:
+                break
     bet_amount_history.append(bet_amount)
 
 def win(who):
@@ -788,6 +780,7 @@ def actual_game():
         if player_value_history[len(player_value_history)-1]>=22:
             typer("You bust.")
             win("h")
+            return "Bust"
         def hit_stand_sequence():
             while True:
                 time.sleep(0.75)
@@ -802,9 +795,11 @@ def actual_game():
                 else:
                     if "hit" in hit_or_stand:
                         hit_or_stand="hit"
+                        time.sleep(0.75)
                         break
                     elif "stand" in hit_or_stand:
                         hit_or_stand="stand"
+                        time.sleep(0.75)
                         break
             return hit_or_stand
         answer=hit_stand_sequence()
@@ -823,8 +818,11 @@ def actual_game():
 
     loop_helper=3
     while True:
-        if player_turn(loop_helper)=="Stand":
+        answer=player_turn(loop_helper)
+        if answer=="Stand":
             break
+        elif answer=="Bust":
+            return
         if loop_helper==7 and player_value_history[6]<22:
             typer("Congratulations. You have reach 7 cards without going over 21.")
             win("p")
@@ -846,23 +844,17 @@ def actual_game():
         if house_value_history[len(house_value_history)-1]>=17:
             typer("The house stands.")
             return "Stand"
+        elif house_value_history[len(house_value_history)-1]>=22:
+            typer("The house busts.")
+            win("p")
+        elif house_value_history[len(house_value_history)-1]>=17:
+            typer("The house stands.")
+            return "Stand"
         else:
             typer("The house will hit.")
             next_hcard=house_valuefinder(house_value_helper)
-            custom_printer("no")
             house_value_calculator(house_value_history[len(house_value_history)-1], next_hcard)
-            current_house_value=house_value_history[len(house_value_history)-1]
-            if current_house_value>=22:
-                typer("The house busts.")
-                win("p")
-            elif current_house_value>=17:
-                typer("The house stands.")
-                return "Stand"
-            elif current_house_value<=16:
-                return "Hit"
-            typer("The house's current total card value is: ")
-            time.sleep(0.25)
-            typer(str(current_house_value))
+
 
     time.sleep(1)
     loop_helper=2
@@ -889,4 +881,26 @@ def actual_game():
         typer("You got closer to 21 than the house.")
         win("p")
 
-actual_game()
+def reset():
+    while len(player_hand)>1:
+        try:
+            deck.append(player_hand[len(player_hand)-1])
+            player_hand.remove(len(player_hand)-1)
+        except:
+            break
+    while len(house_hand)>0:
+        try:
+            deck.append(house_hand[len(house_hand)-1])
+            house_hand.remove(len(house_hand)-1)
+        except:
+            break
+
+while True:
+    #actual_game()
+
+    player_value_history=[]
+    house_value_history=[]
+    current_player_value=0
+    current_house_value=0
+    bet_amount_history=[]
+    reset()
