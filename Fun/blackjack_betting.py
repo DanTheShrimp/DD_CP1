@@ -455,7 +455,7 @@ house_value_history=[]
 current_player_value=0
 current_house_value=0
 bet_amount_history=[]
-money_list=[250]
+money_list=[500]
 
 def typer(text):
     for char in text:
@@ -731,21 +731,27 @@ for item in slug:
 time.sleep(3)
 clear_terminal()
 typer("Welcome to Doomslug Blackjack.")
-time.sleep(0.75)
-typer("Do you know the rules of Blackjack?")
-do_they_know=str(input(""))
-if "no" in do_they_know:
-    typer("Here are the rules of this game:")
-    time.sleep(0.5)
-    typer("1. The goal is to get as close to 21 without going over. If you start with an Ace and another card worth 10, you win instantly.")
-    time.sleep(0.75)
-    typer("2. Face cards are worth 10, and Aces are worth 1. Number cards are worth themselves.")
-    time.sleep(0.75)
-    typer("3. If you reach 7 cards without going over 21, you automatically win. This rule is called Seven Card Charlie, and it also affects the house.")
-    time.sleep(0.75)
-    typer("4. During your turn, you can hit or stand. Hitting means you want another card, and standing means you stop.")
-    time.sleep(0.75)
-    typer("5. The house will continuously hit until they reach 17 or any number higher than 17.")
+while True:
+    do_they_know=str(input(""))
+    if "ye" in do_they_know:
+        time.sleep(0)
+        break
+    elif "no" in do_they_know:
+        typer("Here are the rules of this game:")
+        time.sleep(0.5)
+        typer("1. The goal is to get as close to 21 without going over. If you start with an Ace and another card worth 10, you win instantly.")
+        time.sleep(0.75)
+        typer("2. Face cards are worth 10, and Aces are worth 1. Number cards are worth themselves.")
+        time.sleep(0.75)
+        typer("3. If you reach 7 cards without going over 21, you automatically win. This rule is called Seven Card Charlie, and it also affects the house.")
+        time.sleep(0.75)
+        typer("4. During your turn, you can hit or stand. Hitting means you want another card, and standing means you stop.")
+        time.sleep(0.75)
+        typer("5. The house will continuously hit until they reach 17 or any number higher than 17.")
+        break
+    else:
+        time.sleep(0.75)
+        typer("Do you know the rules of Blackjack?")
 
 def actual_game():
     time.sleep(1)
@@ -765,12 +771,14 @@ def actual_game():
         custom_printer("no")
         time.sleep(2)
         win("p")
+        return
     elif win_checker_forstart(hcard_1, hcard_2)==1:
         typer("The house got Blackjack.")
         time.sleep(0.5)
         custom_printer("no")
         time.sleep(2)
         win("h")
+        return
 
     typer("Your current total card value is: ")
     time.sleep(0.25)
@@ -885,18 +893,18 @@ def reset():
     while len(player_hand)>1:
         try:
             deck.append(player_hand[len(player_hand)-1])
-            player_hand.remove(len(player_hand)-1)
+            del player_hand[len(player_hand)-1]
         except:
             break
     while len(house_hand)>0:
         try:
             deck.append(house_hand[len(house_hand)-1])
-            house_hand.remove(len(house_hand)-1)
+            del house_hand[len(house_hand)-1]
         except:
             break
 
 while True:
-    #actual_game()
+    actual_game()
 
     player_value_history=[]
     house_value_history=[]
@@ -904,3 +912,8 @@ while True:
     current_house_value=0
     bet_amount_history=[]
     reset()
+    pcard_1=player_valuefinder(1)
+    hcard_1=house_valuefinder(0)
+
+    pcard_2=player_valuefinder(2)
+    hcard_2=house_valuefinder(1)
