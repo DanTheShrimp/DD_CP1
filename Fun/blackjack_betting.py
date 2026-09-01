@@ -769,14 +769,14 @@ def actual_game():
         typer("You got Blackjack!")
         time.sleep(0.5)
         custom_printer("no")
-        time.sleep(2)
+        time.sleep(1)
         win("p")
         return
     elif win_checker_forstart(hcard_1, hcard_2)==1:
         typer("The house got Blackjack.")
         time.sleep(0.5)
         custom_printer("no")
-        time.sleep(2)
+        time.sleep(1)
         win("h")
         return
 
@@ -789,7 +789,7 @@ def actual_game():
             typer("You bust.")
             time.sleep(0.75)
             win("h")
-            time.sleep(2)
+            time.sleep(1)
             return "Bust"
         def hit_stand_sequence():
             while True:
@@ -835,7 +835,9 @@ def actual_game():
             return
         if loop_helper==7 and player_value_history[6]<22:
             typer("Congratulations. You have reach 7 cards without going over 21.")
+            time.sleep(0.75)
             win("p")
+            time.sleep(1)
         elif loop_helper==7:
             break
         loop_helper+=1
@@ -883,13 +885,19 @@ def actual_game():
 
     if latest_player_value==latest_house_value:
         typer("You got the same score as the house.")
+        time.sleep(0.75)
         win("t")
+        time.sleep(1)
     elif latest_house_value>latest_player_value:
         typer("The house got closer to 21 than you.")
+        time.sleep(0.75)
         win("h")
+        time.sleep(1)
     elif latest_house_value<latest_player_value:
         typer("You got closer to 21 than the house.")
+        time.sleep(0.75)
         win("p")
+        time.sleep(1)
 
 def reset():
     while len(player_hand)>1:
