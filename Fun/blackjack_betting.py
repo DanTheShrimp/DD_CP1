@@ -800,122 +800,120 @@ def actual_game():
     time.sleep(0.25)
     typer(str(player_value_history[len(player_value_history)-1])) #tell them the sum of their cards' values
 
-    def player_turn(player_value_helper):
-        if player_value_history[len(player_value_history)-1]>=22:
+    def player_turn(player_value_helper): #the parameter here helps the player draw new cards and put them in the right spot in player_hand
+        if player_value_history[len(player_value_history)-1]>=22: #if the most recent player value is greater than or equal to 22
             typer("You bust.")
             time.sleep(0.75)
-            win("h")
+            win("h") #call the win function, tell them the player lost
             time.sleep(1)
-            return "Bust"
-        def hit_stand_sequence():
+            return "Bust" #return "Bust" and exit the function
+        def hit_stand_sequence(): #this is, you guessed it, the hit stand sequence
             while True:
                 time.sleep(0.75)
                 typer("Do you want to hit or stand?")
                 try:
-                    hit_or_stand=input(str(""))
-                except ValueError:
+                    hit_or_stand=input(str("")) #an input with extra precautions
+                except ValueError: #this is just a little stupid-proofing i like to do on every input i write
                     time.sleep(0)
 
-                if "hit" in hit_or_stand and "stand" in hit_or_stand:
+                if "hit" in hit_or_stand and "stand" in hit_or_stand: #if hit and stand are both in the answer then we do nothing
                     time.sleep(0)
                 else:
-                    if "hit" in hit_or_stand:
-                        hit_or_stand="hit"
+                    if "hit" in hit_or_stand: #if the word "hit" is in the answer
+                        hit_or_stand="hit" #set the input variable to just equal "hit"
                         time.sleep(0.75)
-                        break
-                    elif "stand" in hit_or_stand:
+                        break #break the loop
+                    elif "stand" in hit_or_stand: #the same thing but for standing
                         hit_or_stand="stand"
                         time.sleep(0.75)
                         break
-            return hit_or_stand
-        answer=hit_stand_sequence()
-        if answer=="hit":
-            next_pcard=player_valuefinder(player_value_helper)
-            custom_printer("yes")
-            player_value_calculator(player_value_history[len(player_value_history)-1],next_pcard)
-            current_player_value=player_value_history[len(player_value_history)-1]
+            return hit_or_stand #return the value of hit_or_stand, remember this is a function
+        answer=hit_stand_sequence() #go through the hit stand sequence and get what was returned
+        if answer=="hit": #we execute this code if the player wants to hit
+            next_pcard=player_valuefinder(player_value_helper) #get another card for the player, using the argument given to the player turn function when it was called
+            custom_printer("yes") #print the new cards, house cards are still hiddon
+            player_value_calculator(player_value_history[len(player_value_history)-1],next_pcard) #get the new total value of the player's cards
+            current_player_value=player_value_history[len(player_value_history)-1] #now we grab that new value and put it in a variable
             typer("Your current total card value is: ")
             time.sleep(0.25)
-            typer(str(current_player_value))
-            return "Hit"
-        elif answer=="stand":
+            typer(str(current_player_value)) #print that value
+            return "Hit" #return the fact that the player hit
+        elif answer=="stand": #if they stand we do almost nothing
             typer("Standing.")
-            return "Stand"
+            return "Stand" #return the fact that the player stood
 
-    loop_helper=3
-    while True:
-        answer=player_turn(loop_helper)
-        if answer=="Stand":
+    loop_helper=3 #this is set to 3 because if you look back on the previous code, pcard_two uses a value of 2 when calling the function it used
+    while True: #loop the player taking turns until they bust using the checker built into the player turn, or stand
+        answer=player_turn(loop_helper) #call the player turn, using loop_helper as the argument
+        if answer=="Stand": #if they stand we break the loop
             break
-        elif answer=="Bust":
+        elif answer=="Bust": #if they bust we exit the actual_game function, all of this is still in a function
             return
-        if loop_helper==7 and player_value_history[6]<22:
+        if loop_helper==7 and player_value_history[6]<22: #if loophelper gets to 7 (7 cards drawn by the player) and they still haven't busted, the player wins automatically
             typer("Congratulations. You have reach 7 cards without going over 21.")
             time.sleep(0.75)
-            win("p")
+            win("p") #call the win function and tell it that the player won
             time.sleep(1)
-        elif loop_helper==7:
+        elif loop_helper==7: #just some foolproofing, in case something somehow went wrong
             break
-        loop_helper+=1
+        loop_helper+=1 #if none of the if statements activate before this then we increase the loop_helper by 1 and loop
 
     time.sleep(1)
     typer("It is now the house's turn.")
 
-    def house_turn(house_value_helper):
+    def house_turn(house_value_helper): #this house turn function is a watered-down copy of the player turn
         time.sleep(0.75)
-        custom_printer("no")
+        custom_printer("no") #we reveal the house's hidden card
         time.sleep(0.5)
         typer("The house's current total card value is: ")
         time.sleep(0.25)
-        typer(str(house_value_history[len(house_value_history)-1]))
+        typer(str(house_value_history[len(house_value_history)-1])) #tell the player the house's current total card value
         time.sleep(0.75)
-        if house_value_history[len(house_value_history)-1]>=17:
+        if house_value_history[len(house_value_history)-1]>=17: #if that value is greater than or equal to 17 the house stands
             typer("The house stands.")
-            return "Stand"
-        elif house_value_history[len(house_value_history)-1]>=22:
+            return "Stand" #returning
+        elif house_value_history[len(house_value_history)-1]>=22: #if that value is greater than or equal to 22 the house busts
             typer("The house busts.")
-            win("p")
-        elif house_value_history[len(house_value_history)-1]>=17:
-            typer("The house stands.")
-            return "Stand"
-        else:
+            win("p") #calling the win function and telling it the house won
+        else: #if the previous if statements don't activate then we run this
             typer("The house will hit.")
-            next_hcard=house_valuefinder(house_value_helper)
-            house_value_calculator(house_value_history[len(house_value_history)-1], next_hcard)
+            next_hcard=house_valuefinder(house_value_helper) #we get another card for the house
+            house_value_calculator(house_value_history[len(house_value_history)-1], next_hcard) #calculate the house's new total card value
 
 
     time.sleep(1)
-    loop_helper=2
+    loop_helper=2 #back when we got the second card for the house, the value in the parenthesis was 1. that explains why loop_helper equals 2
     while True:
-        if house_turn(loop_helper)=="Stand":
-            break
-        if loop_helper==7 and house_value_history[6]<22:
+        if house_turn(loop_helper)=="Stand": #if the house stands
+            break #break the loop
+        if loop_helper==7 and house_value_history[6]<22: #if the house has drawn 7 cards and hasn't gone over 21
             typer("The house reached 7 cards without going over 21.")
-            win("h")
-        elif loop_helper==7:
+            win("h") #we call the win function and tell it that the house won
+        elif loop_helper==7: #some more foolproofing, i really don't want my code to break
             break
-        loop_helper+=1
+        loop_helper+=1 #if the if statements don't activate then we increase loop_helper by one and loop
 
+    #getting the most recent values for the player and the house
     latest_player_value=player_value_history[len(player_value_history)-1]
     latest_house_value=house_value_history[len(house_value_history)-1]
 
-    if latest_player_value==latest_house_value:
+    if latest_player_value==latest_house_value: #if they are the same
         typer("You got the same score as the house.")
         time.sleep(0.75)
-        win("t")
+        win("t") #it's a tie
         time.sleep(1)
-    elif latest_house_value>latest_player_value:
+    elif latest_house_value>latest_player_value: #if the house value is greater than the player value
         typer("The house got closer to 21 than you.")
         time.sleep(0.75)
-        win("h")
+        win("h") #the house wins
         time.sleep(1)
-    elif latest_house_value<latest_player_value:
+    elif latest_house_value<latest_player_value: #if the player value is greater than the house value
         typer("You got closer to 21 than the house.")
         time.sleep(0.75)
-        win("p")
+        win("p") #the player wins
         time.sleep(1)
 
-def reset():
+def reset(): #this function resets the player and house hands and the deck
     while len(player_hand)>1:
         try:
             deck.append(player_hand[len(player_hand)-1])
