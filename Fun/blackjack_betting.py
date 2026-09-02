@@ -2,10 +2,10 @@ import sys, time, random
 #SEVEN CARD CHARLIE!!!
 import os
 
-def clear_terminal():
+def clear_terminal(): #this clears the terminal
     os.system('cls' if os.name == 'nt' else 'clear')
 
-slug=[
+slug=[ #big slug art
 "                                               :===-:                                      -+*#*=-             ",
 "                                              +#%%####=-                                  *#%%#%#*=            ",
 "                                              =###***%##+-   :=++==-:-=+#*=-:=--         +##*++*##*=           ",
@@ -68,7 +68,7 @@ slug=[
 "              -*###%%##**********##%%%###%%#*++==+========------==-------------------------++*#%%%*            ",
 "                    +****########%%%%#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#%%%%%%%%%%%%#+-                "
 ]
-deck=[
+deck=[ #the ENTIRE deck, no jokers
     [" _____ ",
     "|\\   /|",
     "| \\ / |",
@@ -441,8 +441,8 @@ deck=[
     "|_%%%>|"],
 ]
 
-house_hand=[]
-player_hand=[
+house_hand=[] #setting the house hand to nothing
+player_hand=[ #we will need the blank card for later
     ["       ",
     "       ",
     "       ",
@@ -450,6 +450,7 @@ player_hand=[
     "       ",
     "       "]
 ]
+#setting important variables and lists
 player_value_history=[]
 house_value_history=[]
 current_player_value=0
@@ -458,17 +459,19 @@ bet_amount_history=[]
 money_list=[500]
 
 def typer(text):
-    for char in text:
-        speed=random.randint(250,750)/random.randint(5000,15000)
-        print(char,end="")
-        time.sleep(speed)
-    print("")
+    for char in text: #for character in text
+        speed=random.randint(250,750)/random.randint(5000,15000) #the speed at which the typer types, take a number between 250 and 750 and divide it by a number between 5000 and 15000
+        print(char,end="") #print the one character and don't go to a new line
+        time.sleep(speed) #wait for an extra random amount of time to add a human feel
+    print("") #go to a new line
 
 def house_valuefinder(card):
-    decklen=len(deck)
-    chosenh_card=random.randint(1,decklen-1)
-    house_hand.append(deck[chosenh_card])
-    del deck[chosenh_card]
+    decklen=len(deck) #get the length of the deck because it will change over time
+    chosenh_card=random.randint(1,decklen-1) #get a random number between the 2nd card (the first is the overturned one) and the last card
+    house_hand.append(deck[chosenh_card]) #put the chosen card in the player hand
+    del deck[chosenh_card] #delete it from the deck
+
+    #this chunk checks the second line of the card for a specific character
     if "A" in house_hand[card][1]:
         hc_value=1
     elif "J" in house_hand[card][1] or "Q" in house_hand[card][1] or "K" in house_hand[card][1]:
@@ -493,7 +496,7 @@ def house_valuefinder(card):
         hc_value=10
     return hc_value
 
-def player_valuefinder(card):
+def player_valuefinder(card): #this is the same as house_valuefinder but for the player
     decklen=len(deck)
     chosenp_card=random.randint(1,decklen-1)
     player_hand.append(deck[chosenp_card])
@@ -522,11 +525,20 @@ def player_valuefinder(card):
         hp_value=10
     return hp_value
 
+#this whole thing prints the cards
 def custom_printer(hidden):
-    printer_helper=0
+    printer_helper=0 #a little helper variable for later
     def seven_card_charlieplayer():
+        #each segment will try to print the first line of the first, second, third, etc card, if it doesn't work we print nothing. example:
+        # _____   _____
+        #|K  WW| |K  WW| then nothing over here, unless we have another card
+        #| o {)| | /\{)|
+        #|o o%%| | \/%%|
+        #| |%%%| |  %%%|
+        #|_%%%>| |_%%%>|
+
         try:        
-            print(player_hand[1][printer_helper], end=" ")
+            print(player_hand[1][printer_helper], end=" ") #printer helper is telling us which row of the card to print
         except IndexError:
             print(player_hand[0][0], end=" ")
         try:
@@ -555,16 +567,18 @@ def custom_printer(hidden):
             print(player_hand[0][0])
 
     def seven_card_charliehouse(hidden):
-        if hidden=="yes":
+        #this is for the house
+        if hidden=="yes": #if we are hiding the first card, then we do this section
             try:        
-                print(deck[0][printer_helper], end=" ")
+                print(deck[0][printer_helper], end=" ") #see "deck" and not "house_hand?" that first card of the deck is the turned over card
             except IndexError:
                 print(player_hand[0][0], end=" ")
-        if hidden=="no":
+        if hidden=="no": #if not, we do this
             try:        
-                print(house_hand[0][printer_helper], end=" ")
+                print(house_hand[0][printer_helper], end=" ") #now it's house_hand and not deck
             except IndexError:
                 print(player_hand[0][0], end=" ")
+        #the rest of it is the same as the player's
         try:
             print(house_hand[1][printer_helper], end=" ")
         except IndexError:
@@ -592,67 +606,67 @@ def custom_printer(hidden):
     typer("House cards:")
     time.sleep(0.5)
     for item in player_hand[0]:
-        if hidden=="yes":
+        if hidden=="yes": #if the argument equals yes we hide the first house card
             try:
-                seven_card_charliehouse("yes")
-                printer_helper+=1
+                seven_card_charliehouse("yes") #do the thing
+                printer_helper+=1 #add one to printer helper
             except IndexError:
-                print(item)
-        if hidden=="no":
+                print(item) #if something weird happens this is a failsafe, which should NEVER activate but here it is
+        if hidden=="no": #same thing as before but we don't hide the first house card
             try:
                 seven_card_charliehouse("no")
                 printer_helper+=1
             except IndexError:
                 print(item)
-    printer_helper=0
+    printer_helper=0 #set printer helper back to 0
     typer("Your cards:")
     time.sleep(0.5)
-    for item in player_hand[0]:
+    for item in player_hand[0]: #print our cards
         try:
             seven_card_charlieplayer()
             printer_helper+=1
         except IndexError:
             print(item)
 
-pcard_1=player_valuefinder(1)
-hcard_1=house_valuefinder(0)
+pcard_1=player_valuefinder(1) #getting the player's first card, it's 1 and not 0 because of the blank card already in player_hand
+hcard_1=house_valuefinder(0) #getting the house's first card
 
 pcard_2=player_valuefinder(2)
 hcard_2=house_valuefinder(1)
 
-def money_updater(winorlose,money,bet_amount):
-    if winorlose=="p":
+def money_updater(winorlose,money,bet_amount): #this will update our money
+    if winorlose=="p": #if we win we add the bet_amount to our money
         money=money+bet_amount
-    elif winorlose=="h":
+    elif winorlose=="h": #if we lose we subtract it
         money=money-bet_amount
-        if money<=0:
+        if money<=0: #if we go under $0 then we lose and end the program, this means the game won't end unless the player loses all their money
             time.sleep(1)
             typer("You ran out of money.")
             time.sleep(0.75)
             sys.exit()
-    elif winorlose=="t":
+    elif winorlose=="t": #if we tie then money now equals money
         money=money
     time.sleep(2.5)
-    money_list.clear()
-    money_list.append(money)
+    money_list.clear() #clear the money list
+    money_list.append(money) #add the new money value to it so the only value in it is now the new money
 
-def betting_time():
+def betting_time(): #this will handle when the player is betting money
     time.sleep(1)
     typer("How much money do you want to bet?")
-    while True:
+    while True: #a while True loop so if they don't give us the answer we want we trap them :D
         try:
-            bet_amount=int(input(""))
+            bet_amount=int(input("")) #try inputting an integer
         except:
-            typer("Please input a number.")
+            typer("Please input a number.") #if it isn't an integer then we ask to input a number
         else:
-            if bet_amount>money_list[len(money_list)-1]:
-                typer("You cannot bet more than what you have.")
+            if bet_amount>money_list[len(money_list)-1]: #if the bet amount is more than what the player currently has
+                typer("You cannot bet more than what you have.") #we tell them they can't bet more than what they have
             else:
-                break
-    bet_amount_history.append(bet_amount)
+                break #if everything is good then we break the loop
+    bet_amount_history.append(bet_amount) #add the nice and neat bet_amount to the bet_amount_history
 
-def win(who):
-    won=[
+def win(who): #if someone wins we call this function
+    won=[ #just some art
     "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|",
     "|                                   |",
     "|                                   |",
@@ -697,49 +711,50 @@ def win(who):
     "|                                   |",
     "|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|"
     ]
-    if who=="p":
+    if who=="p": #if the player won
         for item in won:
-            print(item)
-    elif who=="h":
+            print(item) #print the player win art
+    elif who=="h": #if the house won
         for item in lost:
-            print(item)
-    elif who=="t":
+            print(item) #print the player lost art
+    elif who=="t": #if it's a tie
         for item in tie:
-            print(item)
-    money_updater(who,money_list[len(money_list)-1],bet_amount_history[len(bet_amount_history)-1])
+            print(item) #print the tie art
+    money_updater(who,money_list[len(money_list)-1],bet_amount_history[len(bet_amount_history)-1]) #call the money_updater function
 
-def win_checker_forstart(first_num, second_num):
-    win=0
-    if first_num==1 and second_num==10:
-        win=1
-    elif first_num==10 and second_num==1:
-        win=1
-    return win
+def win_checker_forstart(first_num, second_num): #this function will be called at the start twice to see if the player or house has blackjack
+    win=0 #setting win
+    if first_num==1 and second_num==10: #if the first card's value is 1 and the second card's value is 10
+        win=1 #win is now 1
+    elif first_num==10 and second_num==1: #if the first card's value is 10 and the second card's value is 1
+        win=1 #win is now 1
+    return win #return the value of win to whatever called the function
 
-def player_value_calculator(firstnum, secondnum):
-    current_player_value=firstnum+secondnum
-    player_value_history.append(current_player_value)
-    return current_player_value
+def player_value_calculator(firstnum, secondnum): #this function will be very useful
+    current_player_value=firstnum+secondnum #current_player_value=the first number plus the second number
+    player_value_history.append(current_player_value) #add current_player_value to player_value_history
+    return current_player_value #return current_player_value
 
-def house_value_calculator(firstnum, secondnum):
+def house_value_calculator(firstnum, secondnum): #the same as the other one but for the house
     current_house_value=firstnum+secondnum
     house_value_history.append(current_house_value)
     return current_house_value
 
+#finally, we are at the game
 for item in slug:
-    print(item)
-time.sleep(3)
-clear_terminal()
+    print(item) #printing the slug
+time.sleep(3) #waiting, as if the slug was the loading screen
+clear_terminal() #clear the terminal
 typer("Welcome to Doomslug Blackjack.")
 while True:
     time.sleep(0.75)
     typer("Do you know the rules of Blackjack?")
     do_they_know=str(input(""))
-    if "ye" in do_they_know:
+    if "ye" in do_they_know: #if the string "ye" is in the input
         time.sleep(0)
-        break
-    elif "no" in do_they_know:
-        typer("Here are the rules of this game:")
+        break #we are happy, don't tell them the rules
+    elif "no" in do_they_know: #if the string "no" is in the input
+        typer("Here are the rules of this game:") #tell them the rules
         time.sleep(0.5)
         typer("1. The goal is to get as close to 21 without going over. If you start with an Ace and another card worth 10, you win instantly.")
         time.sleep(0.75)
@@ -750,39 +765,40 @@ while True:
         typer("4. During your turn, you can hit or stand. Hitting means you want another card, and standing means you stop.")
         time.sleep(0.75)
         typer("5. The house will continuously hit until they reach 17 or any number higher than 17.")
-        break
+        break #we are happy
+    #if we don't find what we are looking for then we loop
 
-
+#this is the actual game code, it has many nested functions
 def actual_game():
     time.sleep(1)
-    typer(f"You have ${money_list[len(money_list)-1]}.")
-    betting_time()
+    typer(f"You have ${money_list[len(money_list)-1]}.") #tell them how much money they have
+    betting_time() #it's betting time
     time.sleep(1.5)
     typer("Let's begin.")
     time.sleep(0.5)
-    custom_printer("yes")
+    custom_printer("yes") #print the cards, and the house's first card is hidden
 
-    player_value_calculator(pcard_1,pcard_2)
+    player_value_calculator(pcard_1,pcard_2) #use the calculator functions from before
     house_value_calculator(hcard_1,hcard_2)
 
-    if win_checker_forstart(pcard_1, pcard_2)==1:
+    if win_checker_forstart(pcard_1, pcard_2)==1: #use the win checker for start function to see if they got blackjack
         typer("You got Blackjack!")
         time.sleep(0.5)
-        custom_printer("no")
+        custom_printer("no") #print the cards, house's first card is shown
         time.sleep(1)
-        win("p")
-        return
-    elif win_checker_forstart(hcard_1, hcard_2)==1:
+        win("p") #call the win function and tell it that the player won
+        return #exit the actual_game function
+    elif win_checker_forstart(hcard_1, hcard_2)==1: #the same function but used for the house
         typer("The house got Blackjack.")
         time.sleep(0.5)
         custom_printer("no")
         time.sleep(1)
-        win("h")
+        win("h") #call the win function and tell it that the house won
         return
 
     typer("Your current total card value is: ")
     time.sleep(0.25)
-    typer(str(player_value_history[len(player_value_history)-1]))
+    typer(str(player_value_history[len(player_value_history)-1])) #tell them the sum of their cards' values
 
     def player_turn(player_value_helper):
         if player_value_history[len(player_value_history)-1]>=22:
