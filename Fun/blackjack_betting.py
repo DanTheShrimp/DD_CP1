@@ -913,29 +913,32 @@ def actual_game():
         win("p") #the player wins
         time.sleep(1)
 
-def reset(): #this function resets the player and house hands and the deck
-    while len(player_hand)>1:
+def reset_deck(): #this function resets the player and house hands and the deck
+    while len(player_hand)>1: #while the length of player hand is greater than one, remember we still want to keep the blank card
         try:
-            deck.append(player_hand[len(player_hand)-1])
-            del player_hand[len(player_hand)-1]
-        except:
-            break
-    while len(house_hand)>0:
+            deck.append(player_hand[len(player_hand)-1]) #try to add the most recent player hand card to the deck
+            del player_hand[len(player_hand)-1] #then remove the most recent player hand card from player hand
+        except: #if we get any error while doing this
+            break #end this loop
+    while len(house_hand)>0: #this is the exact same except the loop is while the length of house hand is greater than 0, not 1
         try:
             deck.append(house_hand[len(house_hand)-1])
             del house_hand[len(house_hand)-1]
         except:
             break
 
+#we loop this forever so the only way for the game to actually end is for the player to run out of money
 while True:
-    actual_game()
+    actual_game() #call the actual game
 
+    #after the game is through we reset these important variables. we can't do this inside a function because variables in a function can only be used in that function
     player_value_history=[]
     house_value_history=[]
     current_player_value=0
     current_house_value=0
     bet_amount_history=[]
-    reset()
+    reset_deck() #call the reset function
+    #get new cards for the player and house
     pcard_1=player_valuefinder(1)
     hcard_1=house_valuefinder(0)
 
