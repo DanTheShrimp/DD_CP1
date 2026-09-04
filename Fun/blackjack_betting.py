@@ -661,6 +661,8 @@ def betting_time(): #this will handle when the player is betting money
         else:
             if bet_amount>money_list[len(money_list)-1]: #if the bet amount is more than what the player currently has
                 typer("You cannot bet more than what you have.") #we tell them they can't bet more than what they have
+            elif bet_amount<=0: #we don't want them to bet $0 and never lese
+                typer("Please input a number above 0.")
             else:
                 break #if everything is good then we break the loop
     bet_amount_history.append(bet_amount) #add the nice and neat bet_amount to the bet_amount_history
@@ -869,12 +871,12 @@ def actual_game():
         time.sleep(0.25)
         typer(str(house_value_history[len(house_value_history)-1])) #tell the player the house's current total card value
         time.sleep(0.75)
-        if house_value_history[len(house_value_history)-1]>=17: #if that value is greater than or equal to 17 the house stands
+        if house_value_history[len(house_value_history)-1]>=22: #if that value is greater than or equal to 22 the house busts
+            typer("The house busts.")
+            win("p") #calling the win function and telling it the player won
+        elif house_value_history[len(house_value_history)-1]>=17: #if that value is greater than or equal to 17 the house stands
             typer("The house stands.")
             return "Stand" #returning
-        elif house_value_history[len(house_value_history)-1]>=22: #if that value is greater than or equal to 22 the house busts
-            typer("The house busts.")
-            win("p") #calling the win function and telling it the house won
         else: #if the previous if statements don't activate then we run this
             typer("The house will hit.")
             next_hcard=house_valuefinder(house_value_helper) #we get another card for the house
@@ -944,3 +946,4 @@ while True:
 
     pcard_2=player_valuefinder(2)
     hcard_2=house_valuefinder(1)
+    clear_terminal()
