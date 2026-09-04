@@ -1,7 +1,7 @@
 #Daniel DeLong, Madlib
 import time,random
 
-def typer(text): #my super simply typer
+def typer(text): #my super simple typer
     for char in text:
         print(char,end="")
         time.sleep(0.05)
