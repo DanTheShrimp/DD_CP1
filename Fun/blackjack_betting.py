@@ -737,7 +737,7 @@ def betting_time(): #this will handle when the player is betting money
     typer("How much money do you want to bet?")
     while True: #a while True loop so if they don't give us the answer we want we trap them :D
         try:
-            bet_amount=int(input("")) #try inputting an integer
+            bet_amount=int(input("$")) #try inputting an integer
         except:
             typer("Please input a number.") #if it isn't an integer then we ask to input a number
         else:
@@ -964,6 +964,7 @@ def actual_game():
         if house_value_history[len(house_value_history)-1]>=22: #if that value is greater than or equal to 22 the house busts
             typer("The house busts.")
             win("p") #calling the win function and telling it the player won
+            return "Stand"
         elif house_value_history[len(house_value_history)-1]>=17: #if that value is greater than or equal to 17 the house stands
             typer("The house stands.")
             return "Stand" #returning
