@@ -609,6 +609,7 @@ def player_valuefinder(card): #this is the same as house_valuefinder but for the
 
 #this whole thing prints the cards
 def custom_printer(hidden):
+    print("")
     printer_helper=0 #a little helper variable for later
     def seven_card_charlieplayer():
         #each segment will try to print the first line of the first, second, third, etc card, if it doesn't work we print nothing. example:
@@ -735,9 +736,11 @@ def money_updater(winorlose,money,bet_amount): #this will update our money
 def betting_time(): #this will handle when the player is betting money
     time.sleep(1)
     typer("How much money do you want to bet?")
+    ok_to_break="n"
     while True: #a while True loop so if they don't give us the answer we want we trap them :D
         try:
-            bet_amount=int(input("")) #try inputting an integer
+            bet_amount=int(input("$")) #try inputting an integer
+            time.sleep(0.75)
         except:
             typer("Please input a number.") #if it isn't an integer then we ask to input a number
         else:
@@ -745,7 +748,20 @@ def betting_time(): #this will handle when the player is betting money
                 typer("You cannot bet more than what you have.") #we tell them they can't bet more than what they have
             elif bet_amount<=0: #we don't want them to bet $0 and never lese
                 typer("Please input a number above 0.")
+            elif bet_amount==money_list[len(money_list)-1]:
+                while True:
+                    typer("Are you sure you want to go all in?")
+                    all_in_question=input("")
+                    if "ye" in all_in_question:
+                        ok_to_break="y"
+                        break
+                    elif "no" in all_in_question:
+                        time.sleep(0.75)
+                        typer("How much money do you want to bet?")
+                        break
             else:
+                ok_to_break="y"
+            if ok_to_break=="y":
                 break #if everything is good then we break the loop
     bet_amount_history.append(bet_amount) #add the nice and neat bet_amount to the bet_amount_history
 
@@ -936,19 +952,20 @@ def actual_game():
 
     loop_helper=3 #this is set to 3 because if you look back on the previous code, pcard_two uses a value of 2 when calling the function it used
     while True: #loop the player taking turns until they bust using the checker built into the player turn, or stand
-        answer=player_turn(loop_helper) #call the player turn, using loop_helper as the argument
-        if answer=="Stand": #if they stand we break the loop
+        player_answer=player_turn(loop_helper) #call the player turn, using loop_helper as the argument
+        if player_answer=="Stand": #if they stand we break the loop
             break
-        elif answer=="Bust": #if they bust we exit the actual_game function, all of this is still in a function
+        elif player_answer=="Bust": #if they bust we exit the actual_game function, all of this is still in a function
             return
-        if loop_helper==7 and player_value_history[6]<22: #if loophelper gets to 7 (7 cards drawn by the player) and they still haven't busted, the player wins automatically
+        elif loop_helper==7 and player_value_history[6]<22: #if loophelper gets to 7 (7 cards drawn by the player) and they still haven't busted, the player wins automatically
             typer("Congratulations. You have reach 7 cards without going over 21.")
             time.sleep(0.75)
             win("p") #call the win function and tell it that the player won
             time.sleep(1)
         elif loop_helper==7: #just some foolproofing, in case something somehow went wrong
             break
-        loop_helper+=1 #if none of the if statements activate before this then we increase the loop_helper by 1 and loop
+        else:
+            loop_helper+=1 #if none of the if statements activate before this then we increase the loop_helper by 1 and loop
 
     time.sleep(1)
     typer("It is now the house's turn.")
@@ -964,6 +981,7 @@ def actual_game():
         if house_value_history[len(house_value_history)-1]>=22: #if that value is greater than or equal to 22 the house busts
             typer("The house busts.")
             win("p") #calling the win function and telling it the player won
+            return "Bust"
         elif house_value_history[len(house_value_history)-1]>=17: #if that value is greater than or equal to 17 the house stands
             typer("The house stands.")
             return "Stand" #returning
@@ -976,14 +994,18 @@ def actual_game():
     time.sleep(1)
     loop_helper=2 #back when we got the second card for the house, the value in the parenthesis was 1. that explains why loop_helper equals 2
     while True:
-        if house_turn(loop_helper)=="Stand": #if the house stands
+        house_answer=house_turn(loop_helper)
+        if house_answer=="Stand": #if the house stands
             break #break the loop
-        if loop_helper==7 and house_value_history[6]<22: #if the house has drawn 7 cards and hasn't gone over 21
+        elif house_answer=="Bust":
+            return
+        elif loop_helper==7 and house_value_history[6]<22: #if the house has drawn 7 cards and hasn't gone over 21
             typer("The house reached 7 cards without going over 21.")
             win("h") #we call the win function and tell it that the house won
         elif loop_helper==7: #some more foolproofing, i really don't want my code to break
             break
-        loop_helper+=1 #if the if statements don't activate then we increase loop_helper by one and loop
+        else:
+            loop_helper+=1 #if the if statements don't activate then we increase loop_helper by one and loop
 
     #getting the most recent values for the player and the house
     latest_player_value=player_value_history[len(player_value_history)-1]
