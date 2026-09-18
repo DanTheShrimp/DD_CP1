@@ -34,7 +34,7 @@ while number_of_crew>0:
     number_of_crew-=1
     time.sleep(0.75)
 
-total_credits=random.randint(2000,8000)
+total_credits=random.randint(200,800)*10
 yondu_share=round(total_credits*0.13,2)
 remaining_credits=total_credits-yondu_share
 peter_share=round(remaining_credits*0.11,2)
@@ -43,11 +43,15 @@ remaining_credits-=peter_share
 number_of_crew=loop_helper-1
 credits_per_crew=round((remaining_credits/number_of_crew)+2,2)
 typer(f"The most recent mission earned you {total_credits}")
-typer(f"Yondu's share: {yondu_share+credits_per_crew} credits.")
-typer(f"Peter's share: {peter_share+credits_per_crew} credits.")
+typer(f"Yondu's share: {round(yondu_share+credits_per_crew,2)} credits.")
+typer(f"Peter's share: {round(peter_share+credits_per_crew,2)} credits.")
 
 loop_helper=1
 while number_of_crew>0:
-    typer(f"{list_of_names[loop_helper]}'s share: {credits_per_crew} credits.")
-    loop_helper+=1
-    number_of_crew-=1
+    try:
+        typer(f"{list_of_names[loop_helper]}'s share: {round(credits_per_crew,2)} credits.")
+    except:
+        break
+    else:
+        loop_helper+=1
+        number_of_crew-=1
