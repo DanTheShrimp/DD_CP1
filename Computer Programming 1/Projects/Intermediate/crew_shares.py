@@ -35,7 +35,7 @@ while number_of_crew>0: #while the number of crew is greater than 0
     number_of_crew-=1 #subtract one from number_of_crew
     time.sleep(0.75) #wait a little
 
-total_credits=random.randint(200,800)*10 #get a random number between 250 and 800, then mutiply it by 10
+total_credits=random.randint(500,5000)*10 #get a random number between 500 and 5000,
 yondu_share=round(total_credits*0.13,2) #take 13% of total_credits and round it to the 2nd decimal place
 remaining_credits=total_credits-yondu_share #subtract yondu's share from total credits to get remaining credits
 peter_share=round(remaining_credits*0.11,2) #take 11% of remaining_credits and round it to the 2nd decimal place
