@@ -538,7 +538,7 @@ house_value_history=[]
 current_player_value=0
 current_house_value=0
 bet_amount_history=[]
-money_list=[500]
+money_list=[1000]
 
 def typer(text):
     for char in text: #for character in text
@@ -718,6 +718,7 @@ pcard_2=player_valuefinder(2)
 hcard_2=house_valuefinder(1)
 
 def money_updater(winorlose,money,bet_amount): #this will update our money
+    helper_variable="no"
     if winorlose=="p": #if we win we add the bet_amount to our money
         money=money+bet_amount
     elif winorlose=="h": #if we lose we subtract it
@@ -726,12 +727,26 @@ def money_updater(winorlose,money,bet_amount): #this will update our money
             time.sleep(1)
             typer("You ran out of money.")
             time.sleep(0.75)
-            sys.exit()
+            government_chance=random.randint(1,4)
+            paycheck=random.randrange(500,2000,50)
+            typer(f"A paycheck just came in for you, giving you ${paycheck}.")
+            time.sleep(1)
+            if government_chance==1:
+                typer("Unfortunately, the government took your entire paycheck because you didn't pay taxes.")
+                time.sleep(0.75)
+                typer("You are truly out of money.")
+                sys.exit()
+            else:
+                typer(f"${paycheck} has been added to your balance.")
+                money_list.clear()
+                money_list.append(paycheck)
+                helper_variable="yes"
     elif winorlose=="t": #if we tie then money now equals money
         money=money
     time.sleep(2.5)
-    money_list.clear() #clear the money list
-    money_list.append(money) #add the new money value to it so the only value in it is now the new money
+    if helper_variable=="no":
+        money_list.clear() #clear the money list
+        money_list.append(money) #add the new money value to it so the only value in it is now the new money
 
 def betting_time(): #this will handle when the player is betting money
     time.sleep(1)
@@ -891,8 +906,6 @@ def actual_game():
 
     if win_checker_forstart(pcard_1, pcard_2)==1: #use the win checker for start function to see if they got blackjack
         typer("You got Blackjack!")
-        time.sleep(0.5)
-        custom_printer("no") #print the cards, house's first card is shown
         time.sleep(1)
         win("p") #call the win function and tell it that the player won
         return #exit the actual_game function
