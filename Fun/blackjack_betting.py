@@ -728,7 +728,7 @@ def money_updater(winorlose,money,bet_amount): #this will update our money
             typer("You ran out of money.")
             time.sleep(0.75)
             government_chance=random.randint(1,3)
-            paycheck=random.randrange(500,2000,50)
+            paycheck=random.randrange(250,750,50)
             typer(f"A paycheck just came in for you, giving you ${paycheck}.")
             time.sleep(1)
             if government_chance==1:
