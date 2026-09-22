@@ -727,7 +727,7 @@ def money_updater(winorlose,money,bet_amount): #this will update our money
             time.sleep(1)
             typer("You ran out of money.")
             time.sleep(0.75)
-            government_chance=random.randint(1,4)
+            government_chance=random.randint(1,3)
             paycheck=random.randrange(500,2000,50)
             typer(f"A paycheck just came in for you, giving you ${paycheck}.")
             time.sleep(1)
@@ -898,6 +898,8 @@ def actual_game():
     betting_time() #it's betting time
     time.sleep(1.5)
     typer("Let's begin.")
+    time.sleep(1)
+    clear_terminal()
     time.sleep(0.5)
     custom_printer("yes") #print the cards, and the house's first card is hidden
 
@@ -923,6 +925,7 @@ def actual_game():
 
     def player_turn(player_value_helper): #the parameter here helps the player draw new cards and put them in the right spot in player_hand
         if player_value_history[len(player_value_history)-1]>=22: #if the most recent player value is greater than or equal to 22
+            time.sleep(1)
             typer("You bust.")
             time.sleep(0.75)
             win("h") #call the win function, tell them the player lost
@@ -967,6 +970,9 @@ def actual_game():
     while True: #loop the player taking turns until they bust using the checker built into the player turn, or stand
         player_answer=player_turn(loop_helper) #call the player turn, using loop_helper as the argument
         if player_answer=="Stand": #if they stand we break the loop
+            time.sleep(1)
+            clear_terminal()
+            time.sleep(0.5)
             break
         elif player_answer=="Bust": #if they bust we exit the actual_game function, all of this is still in a function
             return
@@ -1024,6 +1030,7 @@ def actual_game():
     latest_player_value=player_value_history[len(player_value_history)-1]
     latest_house_value=house_value_history[len(house_value_history)-1]
 
+    time.sleep(1)
     if latest_player_value==latest_house_value: #if they are the same
         typer("You got the same score as the house.")
         time.sleep(0.75)
