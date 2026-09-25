@@ -21,6 +21,7 @@ def sign_in():
         typer("Username:")
         time.sleep(0.75)
         username_input=input("") #ask for the username
+        time.sleep(0.75)
         #setting some helpful variables
         loop_helper=0
         doesnt_exist=False
@@ -72,6 +73,8 @@ def create_account():
         break
     new_user=(create_username,create_password) #make both their inputs into a tuple (a list that can't be changed)
     users.append(new_user) #tack the new user onto the users tuple
+    time.sleep(1)
+    typer("Account created.")
 
 def null(): #funny things
     typer("How have you gotten here...?")
@@ -84,6 +87,7 @@ while True:
     current_user="null" #set this so we don't get an error later
     typer("Welcome to Gethib.com!")
     while True:
+        time.sleep(0.75)
         typer("Would you like to sign in, create an account, or close the tab?")
         their_choice=input("").lower() #get their input
         if "sign" in their_choice: #if they want to sign in we call the sign_in function and set current_user to its return variable
@@ -150,6 +154,7 @@ while True:
                         typer(f"{delete_account} has been deleted.")
                         time.sleep(0.75)
                         typer("Here is the new list of users and their passwords:") #printing the new list of users
+                        time.sleep(0.75)
                         for user in users:
                             print(f"{user[0]} : {user[1]}")
                             time.sleep(0.5)
@@ -171,6 +176,8 @@ while True:
             #they literally can't do anything so the only option is to sign out
             typer("Would you like to sign out? (you can't do anything)")
             one_more_choice=input("").lower() #get their input one last time
-            time.sleep(1)
-            if "yes" in one_more_choice:
+            time.sleep(0.75)
+            if "yes" in one_more_choice or "sign" in one_more_choice:
+                typer("Signing out.")
+                time.sleep(1)
                 break
