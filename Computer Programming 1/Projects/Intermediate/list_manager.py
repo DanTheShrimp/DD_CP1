@@ -58,33 +58,33 @@ def cross_off():
                     exit_func=False #set this to false
                     break #break this loop
                 elif "yes" in add_and_cross: #if they do want to
-                    add_item(True,False,add_and_cross) #set checked to true
+                    add_item(True,False,add_and_cross) #set checked to true, do_input to false, and the noinput_newitem to the player's input
                     break
                 else:
                     time.sleep(0.75)
                     typer("Please answer the question.")
-        if exit_func==True:
+        if exit_func==True: #if we want to exit the loop and the function we need exit_func to be true
             break
 
 typer("Here is your weekly shopping list:")
 while True:
     time.sleep(1)
-    checking_list.clear()
-    for food in shopping_list:
+    checking_list.clear() #clear the checking list
+    for food in shopping_list: #print the whole shopping list
         print(food)
         time.sleep(0.25)
-    for food in shopping_list:
+    for food in shopping_list: #check if each item in the list has the checked box
         if "☑︎" in food:
             checking_list.append(True)
         else:
             checking_list.append(False)
     time.sleep(0.75)
-    if all(checking_list):
+    if all(checking_list): #if each value in checking_list is true, then we say they can leave and end the program
         typer("You've gotten everything on the list! You can go home now.")
         sys.exit()
     while True:
         typer("Do you want to add or cross off an item?")
-        add_or_cross=input("").lower()
+        add_or_cross=input("").lower() #if 
         if "add" in add_or_cross:
             add_item(False,True,"nuh uh")
             break
