@@ -84,11 +84,11 @@ while True:
         sys.exit()
     while True:
         typer("Do you want to add or cross off an item?")
-        add_or_cross=input("").lower() #if 
-        if "add" in add_or_cross:
+        add_or_cross=input("").lower()
+        if "add" in add_or_cross: #if they want to add an item we call the function, set checked to false, do_input to true, and the other one to something useless because we aren't using it here
             add_item(False,True,"nuh uh")
             break
-        elif "cross" in add_or_cross:
+        elif "cross" in add_or_cross: #if they want to cross off an item we just call the function
             cross_off()
             break
     time.sleep(1)
