@@ -6,3 +6,48 @@ import time,sys
 
 #code is 'I LOVE DOOMSLUG'
 #include a poster on the wall containing the text "I LOVE DOOMSLUG" and a picture of doomslug in a heart in the description of the room
+
+def typer(text):
+    for char in text:
+        print(char,end="")
+        time.sleep(0.05)
+    print("")
+
+typer("You wake up in a dark room, only one window providing light to see by. That window is barred and doesn't seem to be a viable way to get out.")
+time.sleep(0.75)
+typer("On one concrete wall you see a single aged poster with the words 'I LOVE DOOMSLUG' on it and an image of Doomslug in a red heart below the text.")
+time.sleep(0.75)
+typer("On the wall opposite of the poster, you see a metal sliding door and a terminal next to it.")
+while True:
+    time.sleep(1)
+    typer("What do you want to do?")
+    while True:
+        what_to_do=input("").lower()
+        if "terminal" in what_to_do:
+            what_to_do="terminal"
+            break
+        elif "window" in what_to_do:
+            what_to_do="window"
+            break
+        else:
+            what_to_do="confused"
+            break
+    if what_to_do=="confused":
+        typer("You sit there, not sure of what to do.")
+        continue
+    elif what_to_do=="window":
+        typer("You walk over to the window, test a few of the bars, and determine that you aren't getting out this way.")
+        continue
+    elif what_to_do=="terminal":
+        typer("You walked over to the terminal, and see that it's displaying 'INPUT DOOR CODE' on the screen. You also see a digital keyboard displayed just below the input prompt.")
+        attempts_failed=0
+        while True:
+            time.sleep(1)
+            typer("What do you type into the terminal?")
+            player_typed_what=input("").upper()
+            if player_typed_what=="I LOVE DOOMSLUG":
+                correct=True
+            else:
+                correct=False
+                attempts_failed+=1
+                typer("The terminal buzzes angrily at you; it seems the code you inputted was incorrect.")
