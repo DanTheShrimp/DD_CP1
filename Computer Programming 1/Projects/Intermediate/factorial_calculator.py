@@ -1,5 +1,5 @@
 #Daniel DeLong, Factorial Calculator
-import time
+import time,math
 
 #get input
 #check if it is an integer
@@ -25,31 +25,16 @@ while True: #big loop
         except:
             continue
         else:
+            player_num_list=[player_number]
             break
     if player_number<0: #if they chose an integer below zero, we loop back to the loop at the start
         continue
-    elif player_number==0: #if they chose 0, set the answer to one and don't do the math later
-        answer=1
-        do_math="no"
-        break
-    elif player_number==1: #if they chose 1, set the answer to one and don't do the math later
-        answer=1
-        do_math="no"
-        break
     else: #do math
-        do_math="yes"
         break
 
-copyof_playernumber=player_number #we need our player's input
-
-#so this section first sets answer to player_number times player_number minus 1 (so if player_number=2 then we'd do 2*1)
-if do_math=="yes":
-    answer=player_number*(player_number-1)
-    player_number-=1
-    while player_number>1: #then as long as player number is above one (because we don't want to multiply by zero)
-        answer=answer*(player_number-1) #do the same thing (don't worry, if player_number=2 then we multiply by one, subtract one (setting player_number to 1), and exit the loop)
-        player_number-=1
+factorialed_num=map(math.factorial,player_num_list) #using the math module to factorialize every number in our list
+factorialed_list=list(factorialed_num) #turn it back into a list
 
 #print the answer
 time.sleep(1)
-typer(f"{copyof_playernumber}! (factorial) is {answer}.")
+typer(f"{player_number}! (factorial) is {factorialed_list[-1]}.") #an index number of -1 grabs the last item in the list
