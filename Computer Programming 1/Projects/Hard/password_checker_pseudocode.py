@@ -4,11 +4,13 @@
 # GET player password input
 
 # HAVE a list of ALL UPPERCASE letters
+# HAVE a list of ALL lowercase letters
 # HAVE a list of ALL numbers
 # HAVE a list of ALL special characters
 
 # CHECK IF the length is greater than 8
 # CHECK IF there is a capital in the player input
+# CHECK IF there is a lowercase in the player input
 # CHECK IF there is a number in the player input
 # CHECK IF there is a special character in the player input
 
