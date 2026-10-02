@@ -32,7 +32,7 @@ while True:
         length_pass=True
         total_pass+=1
 
-    #each of these loops go through every character and 
+    #each of these loops go through every character and see if it occurs in any of the lists, so is "J" in capital_tuple, is "#" in number_tuple, etc
     for char in password_input:
         if char in capital_tuple:
             capital_pass=True
@@ -54,6 +54,7 @@ while True:
             total_pass+=1
             break
 
+    # this assigns a string to strength and do_advice depending on the value of total_pass
     if total_pass==5:
         strength="Very Strong"
         do_advice="no"
@@ -70,6 +71,7 @@ while True:
         strength="Very Weak"
         do_advice="yes"
 
+    # printing all the necessary information
     typer(f"Password strength: {strength}.")
     if do_advice=="yes":
         typer("Here are all the areas you passed and failed in:")
