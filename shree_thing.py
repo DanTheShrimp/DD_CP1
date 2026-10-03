@@ -20,7 +20,7 @@ ict = [] #This is the list that will store the items
 # DAN - the backslash n is useless, why add it?
 while True:
     print(f"\n {BLUE} ShreeTech {YELLOW}Shopping List Manager!")
-    print(f"{GREEN}Type 1 to View list")
+    print(f"{GREEN} Type 1 to View list")
     print("Type 2 to Add item")
     print("Type 3 to Remove item")
     print("Type 4 to Exit")
